@@ -70,6 +70,11 @@
             }
         }
 
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
         /* Navigation */
         .nav {
             position: fixed;
@@ -242,9 +247,6 @@
             background: var(--primary);
             color: white;
         }
-
-        /* All other CSS from your original code... */
-        /* (I'll include the key missing sections) */
 
         /* Features Section */
         .features {
@@ -599,9 +601,10 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 0.9rem;
         }
 
-        .module-item:hover {
+        .module-item:hover:not(.locked) {
             background: rgba(99, 102, 241, 0.1);
         }
 
@@ -609,9 +612,25 @@
             background: var(--primary);
         }
 
+        .module-item.completed {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .module-item.completed::before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
         .module-item.locked {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+
+        .module-item.locked::before {
+            content: '🔒';
+            margin-right: 0.5rem;
         }
 
         .module-content {
@@ -619,6 +638,102 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Module Content Styles */
+        .module-header {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .module-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .story-section {
+            background: rgba(99, 102, 241, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .choice-btn {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem 0;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .choice-btn:hover {
+            background: var(--primary);
+            transform: translateX(10px);
+        }
+
+        .choice-xp {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .interactive-demo {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .chat-interface {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .chat-message {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            animation: slideUp 0.3s ease;
+        }
+
+        .chat-message.ai {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 3px solid var(--primary);
+        }
+
+        .chat-message.user {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--secondary);
+            margin-left: 2rem;
         }
 
         /* Modal */
@@ -754,6 +869,15 @@
             .dashboard-header {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .learning-interface {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .module-content {
+                padding: 2rem;
             }
         }
     </style>
@@ -1079,7 +1203,7 @@
     <div id="successBurst" class="success-burst" style="display: none;"></div>
 
     <script>
-        // Global State
+        // Global State Management
         const appState = {
             user: {
                 name: 'Learning Seeker',
@@ -1088,14 +1212,43 @@
                 currentModule: 1,
                 xp: 150,
                 streak: 3,
-                level: 'Novice'
+                level: 'Novice',
+                completedModules: [],
+                unlockedModules: [1, 2] // Modules 1 and 2 are unlocked by default
             },
-            currentSection: 'hero'
+            currentSection: 'hero',
+            modules: {
+                1: {
+                    title: "The Day Everything Changed",
+                    duration: "15 minutes",
+                    xp: 50,
+                    completed: false
+                },
+                2: {
+                    title: "Meeting Your AI Partner", 
+                    duration: "20 minutes",
+                    xp: 75,
+                    completed: false
+                },
+                3: {
+                    title: "The Language Revolution",
+                    duration: "25 minutes", 
+                    xp: 100,
+                    completed: false
+                },
+                4: {
+                    title: "From Dreamer to Builder",
+                    duration: "30 minutes",
+                    xp: 125,
+                    completed: false
+                }
+            }
         };
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initializeEventListeners();
+            showSection('hero');
         });
 
         // Navigation
@@ -1120,29 +1273,212 @@
             
             showSection('dashboard');
             document.querySelector('.dashboard').classList.add('active');
+            updateModuleSidebar();
             loadModule(appState.user.currentModule);
         }
 
-        // Module loading
+        // Module Management
         function loadModule(moduleId) {
             const moduleContent = document.getElementById('moduleContent');
             
-            const modules = {
-                1: `
-                    <h1>The Day Everything Changed</h1>
-                    <p>Welcome to your first module. This is where your AI journey begins...</p>
-                    <button class="btn btn-primary" onclick="completeModule(1)">Complete Module</button>
-                `,
-                2: `
-                    <h1>Meeting Your AI Partner</h1>
-                    <p>Learn to collaborate with AI as a partner, not just a tool...</p>
-                    <button class="btn btn-primary" onclick="completeModule(2)">Complete Module</button>
-                `
+            // Check if module is unlocked
+            if (!appState.user.unlockedModules.includes(moduleId)) {
+                moduleContent.innerHTML = `
+                    <div style="text-align: center; padding: 3rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
+                        <h2>Module Locked</h2>
+                        <p>Complete previous modules to unlock this content.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const moduleData = {
+                1: {
+                    content: `
+                        <div class="module-header">
+                            <h1>The Day Everything Changed</h1>
+                            <div class="module-meta">
+                                <div class="module-meta-item">
+                                    <span>📅</span> Week 1
+                                </div>
+                                <div class="module-meta-item">
+                                    <span>⏱️</span> 15 minutes
+                                </div>
+                                <div class="module-meta-item">
+                                    <span>⚡</span> 50 XP
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="story-section">
+                            <h2>Your Story Begins</h2>
+                            <p class="story-text">
+                                You wake up to find the world has shifted. Everyone around you seems to be speaking a new language - not of code, but of collaboration with AI. Your colleague just built an entire application by having a conversation. Your friend launched a business using AI tools. Even your grandmother is creating digital art with AI assistance.
+                            </p>
+                            <p class="story-text">
+                                You realize: the future isn't coming. It's already here. And you have a choice to make.
+                            </p>
+                            
+                            <div style="margin-top: 2rem;">
+                                <h3>What's your response?</h3>
+                                <button class="choice-btn" onclick="makeChoice(1, 10)">
+                                    <span>I want to understand this new world</span>
+                                    <span class="choice-xp">+10 XP</span>
+                                </button>
+                                <button class="choice-btn" onclick="makeChoice(2, 15)">
+                                    <span>I'm scared but curious</span>
+                                    <span class="choice-xp">+15 XP</span>
+                                </button>
+                                <button class="choice-btn" onclick="makeChoice(3, 20)">
+                                    <span>Show me what's possible</span>
+                                    <span class="choice-xp">+20 XP</span>
+                                </button>
+                            </div>
+                        </div>
+                    `
+                },
+                2: {
+                    content: `
+                        <div class="module-header">
+                            <h1>Meeting Your AI Partner</h1>
+                            <div class="module-meta">
+                                <div class="module-meta-item">
+                                    <span>📅</span> Week 1
+                                </div>
+                                <div class="module-meta-item">
+                                    <span>⏱️</span> 20 minutes
+                                </div>
+                                <div class="module-meta-item">
+                                    <span>⚡</span> 75 XP
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="story-section">
+                            <h2>A New Kind of Partnership</h2>
+                            <p class="story-text">
+                                As you open your computer, a gentle notification appears: "Hello! I'm Claude, your AI learning companion. I'm here to help you discover what's possible when humans and AI work together."
+                            </p>
+                            <p class="story-text">
+                                This isn't like any tutorial you've seen before. Claude seems... different. Almost like talking to a knowledgeable friend who genuinely wants to help.
+                            </p>
+                        </div>
+                        
+                        <div class="interactive-demo">
+                            <h3>Try a Conversation with AI</h3>
+                            <div class="chat-interface" id="chatDemo">
+                                <div class="chat-message ai">
+                                    Hi! I'm your AI learning companion. What would you like to build today? A simple app? A creative project? Just tell me your idea!
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <button class="btn btn-secondary" onclick="simulateChat('I want to build a task manager')">
+                                    "I want to build a task manager"
+                                </button>
+                                <button class="btn btn-secondary" onclick="simulateChat('Can you help me create a budget calculator?')">
+                                    "Help me create a budget calculator"
+                                </button>
+                                <button class="btn btn-secondary" onclick="simulateChat('I have no experience with this')">
+                                    "I have no experience with this"
+                                </button>
+                            </div>
+                            <button class="btn btn-primary" onclick="completeModule(2)" style="width: 100%; margin-top: 2rem;">
+                                Complete Module (+75 XP)
+                            </button>
+                        </div>
+                    `
+                },
+                3: {
+                    content: `
+                        <div class="module-header">
+                            <h1>The Language Revolution</h1>
+                            <div class="module-meta">
+                                <div class="module-meta-item">
+                                    <span>📅</span> Week 1
+                                </div>
+                                <div class="module-meta-item">
+                                    <span>⏱️</span> 25 minutes
+                                </div>
+                                <div class="module-meta-item">
+                                    <span>⚡</span> 100 XP
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="story-section">
+                            <h2>Speaking AI Fluently</h2>
+                            <p class="story-text">
+                                You're discovering that AI responds best to clear, specific requests. It's like learning a new language - but one where being human and conversational actually helps.
+                            </p>
+                            <p class="story-text">
+                                The secret isn't technical jargon. It's about describing what you want as if you're talking to an intelligent colleague.
+                            </p>
+                            
+                            <div style="margin-top: 2rem;">
+                                <h3>Practice: Which request works better?</h3>
+                                <div style="background: rgba(239, 68, 68, 0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>❌ Vague:</strong> "Make me a website"
+                                </div>
+                                <div style="background: rgba(16, 185, 129, 0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>✅ Specific:</strong> "Create a personal portfolio website with sections for my projects, about me, and contact info. Use a modern, clean design with blue and white colors."
+                                </div>
+                                
+                                <button class="btn btn-primary" onclick="completeModule(3)" style="width: 100%; margin-top: 2rem;">
+                                    I understand! Complete Module (+100 XP)
+                                </button>
+                            </div>
+                        </div>
+                    `
+                },
+                4: {
+                    content: `
+                        <div class="module-header">
+                            <h1>From Dreamer to Builder</h1>
+                            <div class="module-meta">
+                                <div class="module-meta-item">
+                                    <span>📅</span> Week 2
+                                </div>
+                                <div class="module-meta-item">
+                                    <span>⏱️</span> 30 minutes
+                                </div>
+                                <div class="module-meta-item">
+                                    <span>⚡</span> 125 XP
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="story-section">
+                            <h2>Your First Real Project</h2>
+                            <p class="story-text">
+                                It's time to build something real. Not a tutorial exercise, but an actual application you can use and share. 
+                                The bridge between dreaming about possibilities and actually creating them.
+                            </p>
+                            
+                            <div style="margin-top: 2rem;">
+                                <h3>Choose Your First Build:</h3>
+                                <button class="choice-btn" onclick="startProject('portfolio')">
+                                    <span>Personal Portfolio Website</span>
+                                    <span class="choice-xp">Show off your skills</span>
+                                </button>
+                                <button class="choice-btn" onclick="startProject('productivity')">
+                                    <span>Productivity Dashboard</span>
+                                    <span class="choice-xp">Organize your life</span>
+                                </button>
+                                <button class="choice-btn" onclick="startProject('creative')">
+                                    <span>Creative Writing Assistant</span>
+                                    <span class="choice-xp">Enhance your creativity</span>
+                                </button>
+                            </div>
+                        </div>
+                    `
+                }
             };
             
-            if (modules[moduleId]) {
-                moduleContent.innerHTML = modules[moduleId];
+            if (moduleData[moduleId]) {
+                moduleContent.innerHTML = moduleData[moduleId].content;
                 updateActiveModule(moduleId);
+                appState.user.currentModule = moduleId;
             }
         }
 
@@ -1155,16 +1491,133 @@
             });
         }
 
-        function completeModule(moduleId) {
-            appState.user.xp += 50;
+        function updateModuleSidebar() {
+            const moduleItems = document.querySelectorAll('.module-item');
+            moduleItems.forEach((item, index) => {
+                const moduleNum = index + 1;
+                
+                // Remove all classes first
+                item.classList.remove('completed', 'locked');
+                
+                // Add appropriate class based on state
+                if (appState.user.completedModules.includes(moduleNum)) {
+                    item.classList.add('completed');
+                } else if (!appState.user.unlockedModules.includes(moduleNum)) {
+                    item.classList.add('locked');
+                }
+            });
+        }
+
+        // Interactive Features
+        function makeChoice(choiceId, xp) {
+            appState.user.xp += xp;
             updateUserInterface();
-            showAchievement('Module Complete!', `You earned 50 XP!`);
+            showAchievement('Choice Made', `You earned ${xp} XP!`);
             
+            // Auto-complete module after choice
+            setTimeout(() => {
+                completeModule(1);
+            }, 1500);
+        }
+
+        function simulateChat(userMessage) {
+            const chatDemo = document.getElementById('chatDemo');
+            
+            // Add user message
+            const userMsgDiv = document.createElement('div');
+            userMsgDiv.className = 'chat-message user';
+            userMsgDiv.textContent = userMessage;
+            chatDemo.appendChild(userMsgDiv);
+            
+            // AI responses based on user input
+            const responses = {
+                'task manager': "Great choice! Let's build a task manager. I'll help you create one with features like adding tasks, marking them complete, and organizing by priority. We'll make it clean and easy to use. Ready to start?",
+                'budget calculator': "Perfect! A budget calculator is super useful. We'll create one that lets you input income and expenses, shows you remaining budget, and maybe even some visual charts. It'll help you take control of your finances!",
+                'no experience': "That's totally okay! Everyone starts somewhere. The beautiful thing about AI partnership is that I can guide you through everything step by step. We'll start simple and build up your confidence. What interests you most - organizing your life, creative projects, or something else?"
+            };
+            
+            let aiResponse = responses['no experience']; // default
+            
+            for (let key in responses) {
+                if (userMessage.toLowerCase().includes(key)) {
+                    aiResponse = responses[key];
+                    break;
+                }
+            }
+            
+            // Add AI response after delay
+            setTimeout(() => {
+                const aiMsgDiv = document.createElement('div');
+                aiMsgDiv.className = 'chat-message ai';
+                aiMsgDiv.textContent = aiResponse;
+                chatDemo.appendChild(aiMsgDiv);
+                chatDemo.scrollTop = chatDemo.scrollHeight;
+            }, 1000);
+        }
+
+        function startProject(projectType) {
+            const projects = {
+                portfolio: "Awesome! Let's build your portfolio website. This will showcase your skills and help you stand out to employers or clients.",
+                productivity: "Great choice! A productivity dashboard will help you organize tasks, track habits, and boost your efficiency.",
+                creative: "Fantastic! We'll create an AI-powered writing assistant that helps with brainstorming, editing, and creative inspiration."
+            };
+            
+            showAchievement('Project Started!', projects[projectType]);
+            setTimeout(() => {
+                completeModule(4);
+            }, 2000);
+        }
+
+        function completeModule(moduleId) {
+            // Check if already completed
+            if (appState.user.completedModules.includes(moduleId)) {
+                return;
+            }
+
+            // Add XP and mark as completed
+            const moduleXP = appState.modules[moduleId].xp;
+            appState.user.xp += moduleXP;
+            appState.user.completedModules.push(moduleId);
+            appState.modules[moduleId].completed = true;
+
             // Unlock next module
-            const nextModule = moduleId + 1;
-            const nextModuleElement = document.querySelector(`.module-item:nth-child(${nextModule})`);
-            if (nextModuleElement) {
-                nextModuleElement.classList.remove('locked');
+            const nextModuleId = moduleId + 1;
+            if (nextModuleId <= 4 && !appState.user.unlockedModules.includes(nextModuleId)) {
+                appState.user.unlockedModules.push(nextModuleId);
+            }
+
+            // Update level based on completed modules
+            updateUserLevel();
+            
+            // Update UI
+            updateUserInterface();
+            updateModuleSidebar();
+            
+            // Show achievement
+            showAchievement('Module Complete!', `You earned ${moduleXP} XP! ${nextModuleId <= 4 ? 'Next module unlocked!' : 'Foundation tier complete!'}`);
+            
+            // Auto-load next module if available
+            if (nextModuleId <= 4) {
+                setTimeout(() => {
+                    loadModule(nextModuleId);
+                }, 2000);
+            }
+        }
+
+        function updateUserLevel() {
+            const completedCount = appState.user.completedModules.length;
+            const levels = ['Novice', 'Apprentice', 'Builder', 'Creator', 'Master'];
+            
+            if (completedCount >= 4) {
+                appState.user.level = 'Master';
+            } else if (completedCount >= 3) {
+                appState.user.level = 'Creator';
+            } else if (completedCount >= 2) {
+                appState.user.level = 'Builder';
+            } else if (completedCount >= 1) {
+                appState.user.level = 'Apprentice';
+            } else {
+                appState.user.level = 'Novice';
             }
         }
 
@@ -1185,10 +1638,28 @@
             document.getElementById('achievementTitle').textContent = title;
             document.getElementById('achievementDesc').textContent = description;
             
+            const icons = {
+                'Module Complete!': '🎓',
+                'Choice Made': '✨', 
+                'Project Started!': '🚀',
+                'Welcome!': '👋',
+                'Level Up!': '⬆️'
+            };
+            
+            document.getElementById('achievementIcon').textContent = icons[title] || '🏆';
+            
             popup.classList.add('show');
             setTimeout(() => {
                 popup.classList.remove('show');
-            }, 3000);
+            }, 4000);
+        }
+
+        function showSuccessBurst() {
+            const burst = document.getElementById('successBurst');
+            burst.style.display = 'block';
+            setTimeout(() => {
+                burst.style.display = 'none';
+            }, 600);
         }
 
         // Modal Management
@@ -1217,6 +1688,7 @@
             updateUserInterface();
             closeModal('enrollModal');
             showDashboard();
+            showAchievement('Journey Begun!', 'Welcome to Liberation Learning!');
         }
 
         // Demo Mode
@@ -1225,6 +1697,7 @@
             appState.user.email = 'demo@liberation.ai';
             updateUserInterface();
             showDashboard();
+            showAchievement('Demo Mode!', 'Explore the full experience!');
         }
 
         // Initialize Event Listeners
@@ -1238,9 +1711,6 @@
                 });
             });
         }
-
-        // Show hero section by default
-        showSection('hero');
     </script>
 </body>
 </html>
