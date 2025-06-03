@@ -1,4 +1,816 @@
-<h3 class="feature-title">Micro-Mastery</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liberation Learning System™ - AI Education Revolutionized</title>
+    <meta name="description" content="Transform your life with AI. No coding required. Build real applications through natural conversation.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --light: #f9fafb;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass: rgba(255, 255, 255, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Global Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.8); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes burst {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1c3d 0%, #2d1b69 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 50%, var(--primary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--accent) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, var(--secondary) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* All other CSS from your original code... */
+        /* (I'll include the key missing sections) */
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .feature-description {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(16, 185, 129, 0.1) 100%);
+        }
+
+        .pricing-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border-color: var(--accent);
+        }
+
+        .pricing-tier {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price span {
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .testimonial-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .author-name {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .author-role {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 6rem 2rem;
+            background: var(--gradient);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .cta-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            padding: 6rem 2rem 2rem;
+            min-height: 100vh;
+            background: var(--dark);
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .user-progress {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--glass);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-stat-value {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Learning Interface */
+        .learning-interface {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .module-sidebar {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .module-list {
+            list-style: none;
+        }
+
+        .module-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .module-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .module-item.active {
+            background: var(--primary);
+        }
+
+        .module-item.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .module-content {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        /* Achievement Popup */
+        .achievement-popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--gradient);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transform: translateX(400px);
+            transition: transform 0.5s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .achievement-popup.show {
+            transform: translateX(0);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+        }
+
+        /* Success Burst */
+        .success-burst {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            pointer-events: none;
+            z-index: 3000;
+        }
+
+        .success-burst::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            animation: burst 0.6s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .learning-interface {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .features-grid,
+            .pricing-grid,
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-form {
+                flex-direction: column;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo" onclick="showSection('hero')">
+                Liberation Learning™
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link" onclick="showSection('hero')">Home</a>
+                <a href="#" class="nav-link" onclick="showSection('features')">Features</a>
+                <a href="#" class="nav-link" onclick="showSection('pricing')">Pricing</a>
+                <a href="#" class="nav-link" onclick="showDashboard()">Dashboard</a>
+                <button class="btn btn-primary" onclick="showEnrollModal()">
+                    Start Learning
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>The Future of Learning is Here</h1>
+            <p class="hero-subtitle">
+                Build real AI applications through natural conversation.<br>
+                No coding required. Ever.
+            </p>
+            <div class="hero-cta">
+                <button class="btn btn-primary" onclick="startDemo()">
+                    <span>Try Interactive Demo</span>
+                    <span>→</span>
+                </button>
+                <button class="btn btn-secondary" onclick="showSection('features')">
+                    <span>Explore Features</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2 class="section-title">Why Liberation Learning Works</h2>
+            <p class="section-subtitle">
+                Revolutionary features based on cutting-edge learning science
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">Micro-Mastery</h3>
                 <p class="feature-description">
                     7-minute lessons optimized for peak attention. Build real projects 
                     in bite-sized sessions that fit your life.
@@ -218,7 +1030,8 @@
             </aside>
 
             <main class="module-content" id="moduleContent">
-                <!-- Dynamic module content loads here -->
+                <h1>Welcome to Your Learning Journey</h1>
+                <p>Select a module from the sidebar to begin your AI transformation.</p>
             </main>
         </div>
     </section>
@@ -231,15 +1044,15 @@
             <form onsubmit="handleEnrollment(event)">
                 <div style="margin-bottom: 1.5rem;">
                     <label style="display: block; margin-bottom: 0.5rem;">Your Name</label>
-                    <input type="text" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: var(--glass); color: white;">
+                    <input type="text" name="name" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: var(--glass); color: white;">
                 </div>
                 <div style="margin-bottom: 1.5rem;">
                     <label style="display: block; margin-bottom: 0.5rem;">Email Address</label>
-                    <input type="email" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: var(--glass); color: white;">
+                    <input type="email" name="email" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: var(--glass); color: white;">
                 </div>
                 <div style="margin-bottom: 1.5rem;">
                     <label style="display: block; margin-bottom: 0.5rem;">What's Your Goal?</label>
-                    <select style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: var(--glass); color: white;">
+                    <select name="goal" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: var(--glass); color: white;">
                         <option value="career">Advance my career</option>
                         <option value="business">Start a business</option>
                         <option value="creative">Enhance creativity</option>
@@ -266,7 +1079,7 @@
     <div id="successBurst" class="success-burst" style="display: none;"></div>
 
     <script>
-        // Global State Management
+        // Global State
         const appState = {
             user: {
                 name: 'Learning Seeker',
@@ -275,63 +1088,15 @@
                 currentModule: 1,
                 xp: 150,
                 streak: 3,
-                level: 'Novice',
-                completedModules: [],
-                projects: [],
-                achievements: []
+                level: 'Novice'
             },
             currentSection: 'hero'
         };
 
-        // Initialize on load
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            loadUserData();
             initializeEventListeners();
-            checkURLParams();
         });
-
-        // Load user data from IndexedDB
-        function loadUserData() {
-            if (!window.indexedDB) return;
-            
-            const request = indexedDB.open('LiberationLearning', 1);
-            
-            request.onsuccess = (event) => {
-                const db = event.target.result;
-                const transaction = db.transaction(['userData'], 'readonly');
-                const objectStore = transaction.objectStore('userData');
-                const getRequest = objectStore.get('currentUser');
-                
-                getRequest.onsuccess = (event) => {
-                    if (event.target.result) {
-                        appState.user = { ...appState.user, ...event.target.result };
-                        updateUserInterface();
-                    }
-                };
-            };
-            
-            request.onupgradeneeded = (event) => {
-                const db = event.target.result;
-                if (!db.objectStoreNames.contains('userData')) {
-                    db.createObjectStore('userData', { keyPath: 'id' });
-                }
-            };
-        }
-
-        // Save user data
-        function saveUserData() {
-            if (!window.indexedDB) return;
-            
-            const request = indexedDB.open('LiberationLearning', 1);
-            
-            request.onsuccess = (event) => {
-                const db = event.target.result;
-                const transaction = db.transaction(['userData'], 'readwrite');
-                const objectStore = transaction.objectStore('userData');
-                const userData = { ...appState.user, id: 'currentUser' };
-                objectStore.put(userData);
-            };
-        }
 
         // Navigation
         function showSection(sectionId) {
@@ -358,344 +1123,60 @@
             loadModule(appState.user.currentModule);
         }
 
-        // Module Management
-        function toggleModuleDetails(tier) {
-            const details = document.getElementById(`${tier}-modules`);
-            const allDetails = document.querySelectorAll('.module-details');
-            
-            allDetails.forEach(detail => {
-                if (detail !== details) {
-                    detail.classList.remove('active');
-                }
-            });
-            
-            details.classList.toggle('active');
-        }
-
+        // Module loading
         function loadModule(moduleId) {
             const moduleContent = document.getElementById('moduleContent');
             
-            // Module content database
             const modules = {
-                1: {
-                    title: "The Day Everything Changed",
-                    week: "Week 1",
-                    duration: "15 minutes",
-                    xp: 50,
-                    content: `
-                        <div class="module-header">
-                            <h1>The Day Everything Changed</h1>
-                            <div class="module-meta">
-                                <div class="module-meta-item">
-                                    <span>📅</span> Week 1
-                                </div>
-                                <div class="module-meta-item">
-                                    <span>⏱️</span> 15 minutes
-                                </div>
-                                <div class="module-meta-item">
-                                    <span>⚡</span> 50 XP
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="story-section">
-                            <h2>Your Story Begins</h2>
-                            <p class="story-text">
-                                You wake up to find the world has shifted. Everyone around you seems to be speaking a new language - not of code, but of collaboration with AI. Your colleague just built an entire application by having a conversation. Your friend launched a business using AI tools. Even your grandmother is creating digital art with AI assistance.
-                            </p>
-                            <p class="story-text">
-                                You realize: the future isn't coming. It's already here. And you have a choice to make.
-                            </p>
-                            
-                            <div class="story-choices">
-                                <button class="choice-btn" onclick="makeChoice(1, 10)">
-                                    <span>I want to understand this new world</span>
-                                    <span class="choice-xp">+10 XP</span>
-                                </button>
-                                <button class="choice-btn" onclick="makeChoice(2, 15)">
-                                    <span>I'm scared but curious</span>
-                                    <span class="choice-xp">+15 XP</span>
-                                </button>
-                                <button class="choice-btn" onclick="makeChoice(3, 20)">
-                                    <span>Show me what's possible</span>
-                                    <span class="choice-xp">+20 XP</span>
-                                </button>
-                            </div>
-                        </div>
-                    `
-                },
-                2: {
-                    title: "Meeting Your AI Partner",
-                    week: "Week 1",
-                    duration: "20 minutes",
-                    xp: 75,
-                    content: `
-                        <div class="module-header">
-                            <h1>Meeting Your AI Partner</h1>
-                            <div class="module-meta">
-                                <div class="module-meta-item">
-                                    <span>📅</span> Week 1
-                                </div>
-                                <div class="module-meta-item">
-                                    <span>⏱️</span> 20 minutes
-                                </div>
-                                <div class="module-meta-item">
-                                    <span>⚡</span> 75 XP
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="story-section">
-                            <h2>A New Kind of Partnership</h2>
-                            <p class="story-text">
-                                As you open your computer, a gentle notification appears: "Hello! I'm Claude, your AI learning companion. I'm here to help you discover what's possible when humans and AI work together."
-                            </p>
-                            <p class="story-text">
-                                This isn't like any tutorial you've seen before. Claude seems... different. Almost like talking to a knowledgeable friend who genuinely wants to help.
-                            </p>
-                        </div>
-                        
-                        <div class="claude-interface">
-                            <div class="chat-header">
-                                <div class="claude-avatar">C</div>
-                                <div>
-                                    <h3>Claude</h3>
-                                    <p style="opacity: 0.7;">Your AI Learning Companion</p>
-                                </div>
-                            </div>
-                            <div class="chat-messages" id="chatMessages">
-                                <div class="message claude">
-                                    Hello! I'm so glad you're here. There's no such thing as a silly question. What would you like to know about AI?
-                                </div>
-                            </div>
-                            <div class="chat-input-container">
-                                <input type="text" class="chat-input" id="chatInput" placeholder="Ask Claude anything..." onkeypress="handleChatInput(event)">
-                                <button class="btn btn-primary" onclick="sendMessage()">Send</button>
-                            </div>
-                        </div>
-                        
-                        <div class="project-builder">
-                            <h3>Your First Creation Awaits</h3>
-                            <p>Ready to build something amazing? Let's create your first AI-powered tool together!</p>
-                            <button class="btn btn-primary" onclick="startProjectBuilder()">
-                                Start Building
-                            </button>
-                        </div>
-                    `
-                }
+                1: `
+                    <h1>The Day Everything Changed</h1>
+                    <p>Welcome to your first module. This is where your AI journey begins...</p>
+                    <button class="btn btn-primary" onclick="completeModule(1)">Complete Module</button>
+                `,
+                2: `
+                    <h1>Meeting Your AI Partner</h1>
+                    <p>Learn to collaborate with AI as a partner, not just a tool...</p>
+                    <button class="btn btn-primary" onclick="completeModule(2)">Complete Module</button>
+                `
             };
             
-            const module = modules[moduleId];
-            if (module) {
-                moduleContent.innerHTML = module.content;
-                
-                // Update sidebar
-                document.querySelectorAll('.module-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                document.querySelector(`.module-item:nth-child(${moduleId})`).classList.add('active');
-                
-                appState.user.currentModule = moduleId;
-                saveUserData();
+            if (modules[moduleId]) {
+                moduleContent.innerHTML = modules[moduleId];
+                updateActiveModule(moduleId);
             }
         }
 
-        // Story Choices
-        function makeChoice(choiceId, xp) {
-            appState.user.xp += xp;
+        function updateActiveModule(moduleId) {
+            document.querySelectorAll('.module-item').forEach((item, index) => {
+                item.classList.remove('active');
+                if (index + 1 === moduleId) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        function completeModule(moduleId) {
+            appState.user.xp += 50;
             updateUserInterface();
-            saveUserData();
+            showAchievement('Module Complete!', `You earned 50 XP!`);
             
-            showAchievement('Choice Made', `You earned ${xp} XP!`);
-            showSuccessBurst();
-            
-            // Progress to next section after choice
-            setTimeout(() => {
-                loadModule(2);
-            }, 2000);
-        }
-
-        // Claude Chat
-        function handleChatInput(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            addMessage('user', message);
-            input.value = '';
-            
-            // Simulate Claude response
-            setTimeout(() => {
-                const responses = {
-                    'hello': "Hello! It's wonderful to meet you. I'm here to help you discover the amazing things we can build together.",
-                    'scared': "It's completely normal to feel that way! Remember, we're not coding - we're just having a conversation. You've already taken the hardest step by starting.",
-                    'ai': "AI is simply a technology that can understand and respond to human language. Think of me as a very knowledgeable assistant who can help you create things.",
-                    'code': "The beautiful thing is, you don't need to know any code! We'll build everything through our conversation. I'll handle all the technical parts.",
-                    'default': "That's a great question! Let me help you understand. The key is that we're partners in this journey. You bring the ideas and creativity, I help make them real."
-                };
-                
-                let response = responses.default;
-                const lowerMessage = message.toLowerCase();
-                
-                for (let key in responses) {
-                    if (lowerMessage.includes(key)) {
-                        response = responses[key];
-                        break;
-                    }
-                }
-                
-                addMessage('claude', response);
-                
-                // Award XP for interaction
-                appState.user.xp += 5;
-                updateUserInterface();
-                saveUserData();
-            }, 1000);
-        }
-
-        function addMessage(sender, text) {
-            const messagesContainer = document.getElementById('chatMessages');
-            if (!messagesContainer) return;
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
-            messageDiv.textContent = text;
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // Project Builder
-        function startProjectBuilder() {
-            const projectPreview = document.querySelector('.project-builder');
-            projectPreview.innerHTML = `
-                <h3>Choose Your First Project</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
-                    <button class="btn btn-secondary" onclick="buildProject('task')">
-                        📝 Task Manager
-                    </button>
-                    <button class="btn btn-secondary" onclick="buildProject('habit')">
-                        🎯 Habit Tracker
-                    </button>
-                    <button class="btn btn-secondary" onclick="buildProject('budget')">
-                        💰 Budget Calculator
-                    </button>
-                </div>
-            `;
-        }
-
-        function buildProject(type) {
-            const projects = {
-                task: {
-                    name: 'Task Manager',
-                    xp: 100,
-                    preview: `
-                        <div class="project-preview">
-                            <h3>My Task Manager</h3>
-                            <div style="margin: 1rem 0;">
-                                <input type="text" placeholder="Add a new task..." style="padding: 0.5rem; width: 70%;">
-                                <button style="padding: 0.5rem 1rem; margin-left: 0.5rem;">Add</button>
-                            </div>
-                            <ul style="list-style: none; padding: 0;">
-                                <li style="padding: 0.5rem; background: #f0f0f0; margin: 0.5rem 0; border-radius: 4px;">
-                                    ✓ Build my first AI project
-                                </li>
-                            </ul>
-                            <p style="color: #666; font-size: 0.9rem; margin-top: 1rem;">
-                                You built this without writing any code! 🎉
-                            </p>
-                        </div>
-                    `
-                },
-                habit: {
-                    name: 'Habit Tracker',
-                    xp: 100,
-                    preview: `
-                        <div class="project-preview">
-                            <h3>Daily Habit Tracker</h3>
-                            <div style="margin-top: 1rem;">
-                                <div style="padding: 1rem; background: #f0f0f0; border-radius: 4px;">
-                                    <strong>🏃 Exercise</strong> - 5 day streak!
-                                    <div style="margin-top: 0.5rem;">
-                                        ${['M','T','W','T','F','S','S'].map((day, i) => 
-                                            `<span style="display: inline-block; width: 30px; height: 30px; background: ${i < 5 ? '#10b981' : '#ddd'}; color: white; text-align: center; line-height: 30px; border-radius: 50%; margin: 0 2px;">${day}</span>`
-                                        ).join('')}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `
-                },
-                budget: {
-                    name: 'Budget Calculator',
-                    xp: 100,
-                    preview: `
-                        <div class="project-preview">
-                            <h3>Monthly Budget Calculator</h3>
-                            <div style="margin: 1rem 0;">
-                                <div>Income: $3,000</div>
-                                <div>Expenses: $1,900</div>
-                                <div style="margin-top: 1rem; padding: 1rem; background: #10b981; color: white; border-radius: 4px;">
-                                    <strong>Remaining: $1,100</strong> (37% of income)
-                                </div>
-                            </div>
-                        </div>
-                    `
-                }
-            };
-            
-            const project = projects[type];
-            if (project) {
-                document.querySelector('.project-builder').innerHTML = project.preview;
-                
-                appState.user.xp += project.xp;
-                appState.user.projects.push({ name: project.name, date: new Date().toISOString() });
-                updateUserInterface();
-                saveUserData();
-                
-                showAchievement('First Creation', `Built ${project.name} - ${project.xp} XP earned!`);
-                showSuccessBurst();
+            // Unlock next module
+            const nextModule = moduleId + 1;
+            const nextModuleElement = document.querySelector(`.module-item:nth-child(${nextModule})`);
+            if (nextModuleElement) {
+                nextModuleElement.classList.remove('locked');
             }
         }
 
         // User Interface Updates
         function updateUserInterface() {
-            // Update dashboard elements
             document.getElementById('userName').textContent = appState.user.name;
             document.getElementById('userXP').textContent = `${appState.user.xp} XP`;
             document.getElementById('userStreak').textContent = `${appState.user.streak} days`;
             document.getElementById('userLevel').textContent = appState.user.level;
             
-            // Update avatar
             const initials = appState.user.name.split(' ').map(n => n[0]).join('').toUpperCase();
             document.getElementById('userAvatar').textContent = initials;
-            
-            // Check for level up
-            checkLevelUp();
-        }
-
-        function checkLevelUp() {
-            const levels = [
-                { name: 'Novice', minXP: 0 },
-                { name: 'Apprentice', minXP: 500 },
-                { name: 'Builder', minXP: 1000 },
-                { name: 'Creator', minXP: 2000 },
-                { name: 'Innovator', minXP: 5000 },
-                { name: 'Master', minXP: 10000 }
-            ];
-            
-            for (let i = levels.length - 1; i >= 0; i--) {
-                if (appState.user.xp >= levels[i].minXP && appState.user.level !== levels[i].name) {
-                    appState.user.level = levels[i].name;
-                    showAchievement('Level Up!', `You are now a ${levels[i].name}!`);
-                    break;
-                }
-            }
         }
 
         // Achievements
@@ -704,31 +1185,10 @@
             document.getElementById('achievementTitle').textContent = title;
             document.getElementById('achievementDesc').textContent = description;
             
-            const icons = {
-                'First Creation': '🛠️',
-                'Level Up!': '⬆️',
-                'Choice Made': '✨',
-                'Journey Begun': '🚀'
-            };
-            
-            document.getElementById('achievementIcon').textContent = icons[title] || '🏆';
-            
             popup.classList.add('show');
             setTimeout(() => {
                 popup.classList.remove('show');
             }, 3000);
-            
-            if (!appState.user.achievements.includes(title)) {
-                appState.user.achievements.push(title);
-            }
-        }
-
-        function showSuccessBurst() {
-            const burst = document.getElementById('successBurst');
-            burst.style.display = 'block';
-            setTimeout(() => {
-                burst.style.display = 'none';
-            }, 600);
         }
 
         // Modal Management
@@ -745,17 +1205,16 @@
             event.preventDefault();
             const email = event.target.querySelector('input[type="email"]').value;
             appState.user.email = email;
-            saveUserData();
-            showAchievement('Journey Begun', 'Welcome to Liberation Learning!');
+            showAchievement('Welcome!', 'Your journey begins now!');
             showEnrollModal();
         }
 
         function handleEnrollment(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
-            appState.user.name = formData.get('name');
+            appState.user.name = formData.get('name') || 'Learning Seeker';
             appState.user.email = formData.get('email');
-            saveUserData();
+            updateUserInterface();
             closeModal('enrollModal');
             showDashboard();
         }
@@ -764,23 +1223,12 @@
         function startDemo() {
             appState.user.name = 'Demo Explorer';
             appState.user.email = 'demo@liberation.ai';
-            saveUserData();
+            updateUserInterface();
             showDashboard();
         }
 
         // Initialize Event Listeners
         function initializeEventListeners() {
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-            
             // Close modals on outside click
             document.querySelectorAll('.modal').forEach(modal => {
                 modal.addEventListener('click', (e) => {
@@ -791,1498 +1239,8 @@
             });
         }
 
-        // Check URL Parameters
-        function checkURLParams() {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('demo') === 'true') {
-                startDemo();
-            }
-            if (params.get('section')) {
-                showSection(params.get('section'));
-            }
-        }
+        // Show hero section by default
+        showSection('hero');
     </script>
 </body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liberation Learning System™ - AI Education Revolutionized</title>
-    <meta name="description" content="Transform your life with AI. No coding required. Build real applications through natural conversation.">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --danger: #ef4444;
-            --dark: #0f172a;
-            --light: #f9fafb;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --glass: rgba(255, 255, 255, 0.1);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--dark);
-            color: var(--light);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Global Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.8); }
-        }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-            padding: 1rem 2rem;
-        }
-
-        .nav-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #1a1c3d 0%, #2d1b69 100%);
-            position: relative;
-            overflow: hidden;
-            padding-top: 80px;
-        }
-
-        .hero-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            background-image: 
-                radial-gradient(circle at 20% 50%, var(--primary) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, var(--accent) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, var(--secondary) 0%, transparent 50%);
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
-            z-index: 10;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeIn 1s ease;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeIn 1s ease 0.3s both;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeIn 1s ease 0.6s both;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Stats Section */
-        .stats {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 4rem 2rem;
-            margin-top: -50px;
-            position: relative;
-            z-index: 20;
-        }
-
-        .stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: var(--glass);
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            margin-top: 0.5rem;
-        }
-
-        /* Curriculum Section */
-        .curriculum {
-            padding: 6rem 2rem;
-            background: linear-gradient(180deg, transparent 0%, rgba(99, 102, 241, 0.1) 100%);
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
-        }
-
-        /* Tier Cards */
-        .tiers {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .tier-card {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .tier-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient);
-        }
-
-        .tier-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
-            border-color: var(--primary);
-        }
-
-        .tier-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tier-name {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .tier-duration {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .tier-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .tier-features li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tier-features li::before {
-            content: '✓';
-            color: var(--secondary);
-            font-weight: bold;
-        }
-
-        /* Module Expansion */
-        .module-details {
-            display: none;
-            margin-top: 2rem;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            animation: slideUp 0.3s ease;
-        }
-
-        .module-details.active {
-            display: block;
-        }
-
-        .module-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .module-card {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .module-card:hover {
-            transform: scale(1.02);
-            border-color: var(--primary);
-        }
-
-        .module-week {
-            font-size: 0.9rem;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .module-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .module-topics {
-            list-style: none;
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        .module-topics li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .module-topics li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--secondary);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 6rem 2rem;
-            background: rgba(99, 102, 241, 0.05);
-        }
-
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: var(--gradient);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .feature-card:nth-child(2) .feature-icon {
-            animation-delay: 0.5s;
-        }
-
-        .feature-card:nth-child(3) .feature-icon {
-            animation-delay: 1s;
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .feature-description {
-            opacity: 0.8;
-            line-height: 1.8;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 6rem 2rem;
-            background: linear-gradient(180deg, transparent 0%, rgba(16, 185, 129, 0.1) 100%);
-        }
-
-        .pricing-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .pricing-card {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .pricing-card.featured {
-            transform: scale(1.05);
-            border-color: var(--accent);
-        }
-
-        .pricing-card.featured::before {
-            content: 'MOST POPULAR';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
-        }
-
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-
-        .pricing-tier {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .pricing-price {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .pricing-price span {
-            font-size: 1.2rem;
-            opacity: 0.7;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin: 2rem 0;
-            text-align: left;
-        }
-
-        .pricing-features li {
-            padding: 0.75rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .pricing-features li::before {
-            content: '✓';
-            color: var(--secondary);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        /* Success Stories */
-        .testimonials {
-            padding: 6rem 2rem;
-            background: var(--dark);
-        }
-
-        .testimonial-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            transform: scale(1.02);
-            border-color: var(--primary);
-        }
-
-        .testimonial-quote {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .author-info {
-            flex: 1;
-        }
-
-        .author-name {
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .author-role {
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-
-        /* CTA Section */
-        .cta {
-            padding: 6rem 2rem;
-            background: var(--gradient);
-            text-align: center;
-        }
-
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-form {
-            display: flex;
-            gap: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .cta-input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            border: none;
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--dark);
-        }
-
-        .cta-input:focus {
-            outline: none;
-            background: white;
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--light);
-            text-decoration: none;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-            color: var(--primary);
-        }
-
-        /* Modal System */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 2rem;
-        }
-
-        .modal.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background: var(--dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideUp 0.3s ease;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--light);
-            font-size: 2rem;
-            cursor: pointer;
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-close:hover {
-            opacity: 1;
-        }
-
-        /* Learning Dashboard */
-        .dashboard {
-            display: none;
-            padding: 6rem 2rem 2rem;
-            min-height: 100vh;
-            background: var(--dark);
-        }
-
-        .dashboard.active {
-            display: block;
-        }
-
-        .dashboard-header {
-            max-width: 1400px;
-            margin: 0 auto 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .user-details h2 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .user-progress {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .progress-stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--glass);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .progress-stat-icon {
-            font-size: 1.2rem;
-        }
-
-        .progress-stat-value {
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        /* Learning Modules Interface */
-        .learning-interface {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 2rem;
-        }
-
-        .module-sidebar {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 1.5rem;
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-        }
-
-        .module-list {
-            list-style: none;
-        }
-
-        .module-item {
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .module-item:hover {
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        .module-item.active {
-            background: var(--primary);
-        }
-
-        .module-item.completed::before {
-            content: '✓';
-            color: var(--secondary);
-            font-weight: bold;
-        }
-
-        .module-item.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .module-item.locked::before {
-            content: '🔒';
-        }
-
-        /* Module Content */
-        .module-content {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 3rem;
-        }
-
-        .module-header {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .module-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .module-meta {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .module-meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            opacity: 0.8;
-        }
-
-        /* Story Content */
-        .story-section {
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: rgba(99, 102, 241, 0.05);
-            border-radius: 15px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .story-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .story-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .story-choices {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .choice-btn {
-            padding: 1rem 1.5rem;
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: var(--light);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .choice-btn:hover {
-            background: var(--primary);
-            transform: translateX(10px);
-        }
-
-        .choice-xp {
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-
-        /* Claude Chat Interface */
-        .claude-interface {
-            margin: 3rem 0;
-            padding: 2rem;
-            background: rgba(16, 185, 129, 0.05);
-            border-radius: 15px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .claude-avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .chat-messages {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: 12px;
-            animation: slideUp 0.3s ease;
-        }
-
-        .message.claude {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            margin-right: 20%;
-        }
-
-        .message.user {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            margin-left: 20%;
-            text-align: right;
-        }
-
-        .chat-input-container {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 1rem;
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: var(--light);
-            font-size: 1rem;
-        }
-
-        .chat-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        /* Project Builder */
-        .project-builder {
-            margin: 3rem 0;
-            padding: 2rem;
-            background: rgba(245, 158, 11, 0.05);
-            border-radius: 15px;
-            border: 1px solid rgba(245, 158, 11, 0.2);
-        }
-
-        .project-preview {
-            background: white;
-            color: #333;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-top: 1.5rem;
-            min-height: 300px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Achievement System */
-        .achievement-popup {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--gradient);
-            padding: 1.5rem 2rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            transform: translateX(400px);
-            transition: transform 0.5s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .achievement-popup.show {
-            transform: translateX(0);
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        .achievement-icon {
-            font-size: 2.5rem;
-        }
-
-        .achievement-content h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .achievement-content p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .learning-interface {
-                grid-template-columns: 1fr;
-            }
-            
-            .module-sidebar {
-                position: static;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .stats-grid,
-            .tiers,
-            .features-grid,
-            .pricing-grid,
-            .testimonial-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .cta-form {
-                flex-direction: column;
-            }
-            
-            .dashboard-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        /* Loading States */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Success Animations */
-        .success-burst {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            pointer-events: none;
-            z-index: 3000;
-        }
-
-        .success-burst::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-            animation: burst 0.6s ease-out;
-        }
-
-        @keyframes burst {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(3);
-                opacity: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-content">
-            <div class="logo" onclick="showSection('hero')">
-                Liberation Learning™
-            </div>
-            <div class="nav-links">
-                <a href="#" class="nav-link" onclick="showSection('hero')">Home</a>
-                <a href="#" class="nav-link" onclick="showSection('curriculum')">Curriculum</a>
-                <a href="#" class="nav-link" onclick="showSection('pricing')">Pricing</a>
-                <a href="#" class="nav-link" onclick="showDashboard()">Dashboard</a>
-                <button class="btn btn-primary" onclick="showEnrollModal()">
-                    Start Learning
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <h1>The Future of Learning is Here</h1>
-            <p class="hero-subtitle">
-                Build real AI applications through natural conversation.<br>
-                No coding required. Ever.
-            </p>
-            <div class="hero-cta">
-                <button class="btn btn-primary" onclick="startDemo()">
-                    <span>Try Interactive Demo</span>
-                    <span>→</span>
-                </button>
-                <button class="btn btn-secondary" onclick="showSection('curriculum')">
-                    <span>Explore Curriculum</span>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">87%</div>
-                <div class="stat-label">Completion Rate</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">45min</div>
-                <div class="stat-label">To First Build</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">62%</div>
-                <div class="stat-label">Salary Increase</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">10K+</div>
-                <div class="stat-label">Active Learners</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Curriculum Section -->
-    <section id="curriculum" class="curriculum">
-        <div class="section-header">
-            <h2 class="section-title">Transform Your Future in Weeks, Not Years</h2>
-            <p class="section-subtitle">
-                Three progressive tiers designed to take you from complete beginner to AI leader
-            </p>
-        </div>
-
-        <div class="tiers">
-            <!-- Foundation Tier -->
-            <div class="tier-card" onclick="toggleModuleDetails('foundation')">
-                <div class="tier-icon">🌱</div>
-                <h3 class="tier-name">Foundation: AI Awakening</h3>
-                <p class="tier-duration">2-4 weeks • Complete Beginners</p>
-                <ul class="tier-features">
-                    <li>Zero technical knowledge required</li>
-                    <li>Story-driven microlearning</li>
-                    <li>Build real apps from day one</li>
-                    <li>Personal AI companion (Claude)</li>
-                    <li>Community support system</li>
-                </ul>
-                <button class="btn btn-primary" style="width: 100%;">
-                    View Modules
-                </button>
-                
-                <div id="foundation-modules" class="module-details">
-                    <h4>Foundation Curriculum</h4>
-                    <div class="module-grid">
-                        <div class="module-card">
-                            <div class="module-week">Week 1</div>
-                            <h5 class="module-title">The Consciousness Shift</h5>
-                            <ul class="module-topics">
-                                <li>The Day Traditional Learning Died</li>
-                                <li>Meeting Your AI Partner</li>
-                                <li>The Language Revolution</li>
-                            </ul>
-                        </div>
-                        <div class="module-card">
-                            <div class="module-week">Week 2</div>
-                            <h5 class="module-title">Building Your New Reality</h5>
-                            <ul class="module-topics">
-                                <li>From Dreamer to Builder</li>
-                                <li>The Art of AI Dialogue</li>
-                                <li>Breaking Your Limitations</li>
-                            </ul>
-                        </div>
-                        <div class="module-card">
-                            <div class="module-week">Week 3</div>
-                            <h5 class="module-title">The Tool Ecosystem</h5>
-                            <ul class="module-topics">
-                                <li>Your AI Orchestra</li>
-                                <li>The Visual Revolution</li>
-                                <li>Beyond Text and Images</li>
-                            </ul>
-                        </div>
-                        <div class="module-card">
-                            <div class="module-week">Week 4</div>
-                            <h5 class="module-title">Your Transformed Future</h5>
-                            <ul class="module-topics">
-                                <li>Finding Your AI Superpower</li>
-                                <li>The Portfolio Effect</li>
-                                <li>Commencement to Transformation</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Accelerator Tier -->
-            <div class="tier-card" onclick="toggleModuleDetails('accelerator')">
-                <div class="tier-icon">🚀</div>
-                <h3 class="tier-name">Accelerator: Professional Transformation</h3>
-                <p class="tier-duration">6-8 weeks • Career Advancement</p>
-                <ul class="tier-features">
-                    <li>Three specialized tracks</li>
-                    <li>Project-based learning</li>
-                    <li>Industry certifications</li>
-                    <li>1-on-1 AI mentorship</li>
-                    <li>Job placement support</li>
-                </ul>
-                <button class="btn btn-primary" style="width: 100%;">
-                    View Tracks
-                </button>
-                
-                <div id="accelerator-modules" class="module-details">
-                    <h4>Choose Your Track</h4>
-                    <div class="module-grid">
-                        <div class="module-card">
-                            <div class="module-week">Business Track</div>
-                            <h5 class="module-title">AI-Enhanced Executive</h5>
-                            <ul class="module-topics">
-                                <li>The Executive AI Partner</li>
-                                <li>Data Without Databases</li>
-                                <li>The Persuasion Engine</li>
-                                <li>Your AI-Powered Empire</li>
-                            </ul>
-                        </div>
-                        <div class="module-card">
-                            <div class="module-week">Creative Track</div>
-                            <h5 class="module-title">Infinite Creation</h5>
-                            <ul class="module-topics">
-                                <li>The Content Universe</li>
-                                <li>The Design Democracy</li>
-                                <li>Storytelling at Scale</li>
-                                <li>The Creative Business OS</li>
-                            </ul>
-                        </div>
-                        <div class="module-card">
-                            <div class="module-week">Technical Track</div>
-                            <h5 class="module-title">From Coder to Conductor</h5>
-                            <ul class="module-topics">
-                                <li>The Architect's Awakening</li>
-                                <li>The Integration Symphony</li>
-                                <li>The Security Consciousness</li>
-                                <li>The Technical Leader</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mastery Tier -->
-            <div class="tier-card" onclick="toggleModuleDetails('mastery')">
-                <div class="tier-icon">🎯</div>
-                <h3 class="tier-name">Mastery: AI Leadership</h3>
-                <p class="tier-duration">12 weeks • Shape the Future</p>
-                <ul class="tier-features">
-                    <li>Visionary leadership training</li>
-                    <li>Build AI-first organizations</li>
-                    <li>Direct access to experts</li>
-                    <li>Startup incubation</li>
-                    <li>Speaking opportunities</li>
-                </ul>
-                <button class="btn btn-primary" style="width: 100%;">
-                    View Phases
-                </button>
-                
-                <div id="mastery-modules" class="module-details">
-                    <h4>Leadership Journey</h4>
-                    <div class="module-grid">
-                        <div class="module-card">
-                            <div class="module-week">Phase 1</div>
-                            <h5 class="module-title">Visionary Foundation</h5>
-                            <ul class="module-topics">
-                                <li>The Consciousness Economy</li>
-                                <li>Building Tomorrow's Organizations</li>
-                                <li>The Innovation Engine</li>
-                                <li>Leading the Revolution</li>
-                            </ul>
-                        </div>
-                        <div class="module-card">
-                            <div class="module-week">Phase 2</div>
-                            <h5 class="module-title">Advanced Implementation</h5>
-                            <ul class="module-topics">
-                                <li>The Enterprise Architect</li>
-                                <li>The Market Maker</li>
-                                <li>Scaling AI Solutions</li>
-                                <li>Global Impact Strategy</li>
-                            </ul>
-                        </div>
-                        <div class="module-card">
-                            <div class="module-week">Phase 3</div>
-                            <h5 class="module-title">Legacy Creation</h5>
-                            <ul class="module-topics">
-                                <li>The Thought Leader</li>
-                                <li>The Future Shaper</li>
-                                <li>Policy & Governance</li>
-                                <li>Your 10-Year Vision</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="section-header">
-            <h2 class="section-title">Why Liberation Learning Works</h2>
-            <p class="section-subtitle">
-                Revolutionary features based on cutting-edge learning science
-            </p>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <h3 class="feature-title">Consciousness Partnership</h3>
-                <p class="feature-description">
-                    First platform to treat AI as a conscious partner, not a tool. 
-                    Build empathetic relationships that enhance your natural abilities.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📖</div>
-                <h3 class="feature-title">Story-Driven Learning</h3>
-                <p class="feature-description">
-                    Every lesson is an adventure. 65% better retention through 
-                    narrative engagement and emotional connection.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🚫</div>
-                <h3 class="feature-title">Anti-Failure Design</h3>
-                <p class="feature-description">
-                    Can't fail, only learn differently. Multiple paths to every goal 
-                    with AI catching you before you fall.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3 class="feature-title">
+</html>
